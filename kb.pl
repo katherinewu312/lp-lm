@@ -1,71 +1,70 @@
-s(s(s(NP,VP),CONJ,ST),Sem) --> np(NP,X), vp(VP,Y,_), conj(CONJ,_Conj), s(ST,S),	{Sem=..[Y,X,S]}.
-s(s(NP,VP),Sem) --> np(NP,X), vp(VP,Y,Z,W,_), 	{Sem=..[Y,X,Z,W]}.
-s(s(NP,VP),Sem) --> np(NP,X), vp(VP,Y,Z,_), 		{Sem=..[Y,X,Z]}.
-s(s(NP,VP),Sem) --> np(NP,X), vp(VP,Y,_), 		{Sem=..[Y,X]}.
+s(s(s(NP,VP),CONJ,ST),Sem,P) --> np(NP,X,P1), vp(VP,Y,_,P2), conj(CONJ,_Conj,P3), s(ST,S,P4),	{Sem=..[Y,X,S]}, {P is P1*P2*P3*P4*0.25}.
+s(s(NP,VP),Sem,P) --> np(NP,X,P1), vp(VP,Y,Z,W,_,P2), 	{Sem=..[Y,X,Z,W]}, {P is P1*P2*0.25}.
+s(s(NP,VP),Sem,P) --> np(NP,X,P1), vp(VP,Y,Z,_,P2), 		{Sem=..[Y,X,Z]}, {P is P1*P2*0.25}.
+s(s(NP,VP),Sem,P) --> np(NP,X,P1), vp(VP,Y,_,P2), 		{Sem=..[Y,X]}, {P is P1*P2*0.25}.
 
-np(np(PP,DET,NBAR),X2) 	 --> pp(PP,_X1),  	 det(DET,_Det), nbar(NBAR,X2).
-np(np(PREP,DET,NBAR),X2) --> prep(PREP,_X1), det(DET,_Det), nbar(NBAR,X2).
-np(np(DET,NBAR,PP),X1) 	 --> det(DET,_Det),  nbar(NBAR,X1), pp(PP,_X2).
+np(np(PP,DET,NBAR),X2,P) 	 --> pp(PP,_X1,P1),  	 det(DET,_Det,P2), nbar(NBAR,X2,P3), {P is P1*P2*P3*0.15}.
+np(np(PREP,DET,NBAR),X2,P) --> prep(PREP,_X1,P1), det(DET,_Det,P2), nbar(NBAR,X2,P3), {P is P1*P2*P3*0.15}.
+np(np(DET,NBAR,PP),X1,P) 	 --> det(DET,_Det,P1),  nbar(NBAR,X1,P2), pp(PP,_X2,P3), {P is P1*P2*P3*0.15}.
+np(np(DET,NBAR),X,P) 		--> det(DET,_Det,P1), 	nbar(NBAR,X,P2), {P is P1*P2*0.15}.
+np(np(PN),X,P) 			--> pn(PN,X,P1), {P is P1*0.2}.
+np(np(N),X,P) 			--> n(N,X,P1), {P is P1*0.2}.
 
+vp(vp(VB),Verb,C,P)  		  	--> v(VB,Verb,C,P1), {P is P1*0.09}.
+vp(vp(VB,ADV),Verb,Adv,C,P) 	--> v(VB,Verb,C,P1), adv(ADV,Adv,P2), {P is P1*P2*0.09}.
+vp(vp(VB,PREP),Verb,Prep,C,P) --> v(VB,Verb,C,P1), prep(PREP,Prep,P2), {P is P1*P2*0.09}.
+vp(vp(VB,ADJ),Verb,Adj,C,P) 	--> v(VB,Verb,C,P1), adj(ADJ,Adj,P2), {P is P1*P2*0.09}.
+vp(vp(VB,NP),Verb,X,C,P) 	  	--> v(VB,Verb,C,P1), np(NP,X,P2), {P is P1*P2*0.09}.
+vp(vp(VB,NP1,PREP,NP2),Verb,X1,X2,C,P) --> v(VB,Verb,C,P1), np(NP1,X1,P2), prep(PREP,_Prep,P3), np(NP2,X2,P4), {P is P1*P2*P3*P4*0.05}.
 
-np(np(DET,NBAR),X) 		--> det(DET,_Det), 	nbar(NBAR,X).
-np(np(PN),X) 			--> pn(PN,X).
-np(np(N),X) 			--> n(N,X).
-
-vp(vp(VB),Verb,C)  		  	--> v(VB,Verb,C).
-vp(vp(VB,ADV),Verb,Adv,C) 	--> v(VB,Verb,C), adv(ADV,Adv).
-vp(vp(VB,PREP),Verb,Prep,C) --> v(VB,Verb,C), prep(PREP,Prep).
-vp(vp(VB,ADJ),Verb,Adj,C) 	--> v(VB,Verb,C), adj(ADJ,Adj).
-vp(vp(VB,NP),Verb,X,C) 	  	--> v(VB,Verb,C), np(NP,X).
-vp(vp(VB,NP1,PREP,NP2),Verb,X1,X2,C) --> v(VB,Verb,C), np(NP1,X1), prep(PREP,_Prep), np(NP2,X2).
-
-vp(vp(AV,ADJ),X,_) 	  		--> av(AV,_Av), adj(ADJ,X).
-vp(vp(AV,VB),Verb,C)  	  		--> av(AV,_Av), v(VB,Verb,C).
-vp(vp(AV,VB,ADV),Verb,Adv,C)  	--> av(AV,_Av), v(VB,Verb,C), adv(ADV,Adv).
-vp(vp(AV,VB,PREP),Verb,Prep,C)  --> av(AV,_Av), v(VB,Verb,C), prep(PREP,Prep).
-vp(vp(AV,VB,PREP,N),Verb,X,C)	--> av(AV,_Av), v(VB,Verb,C), prep(PREP,_), n(N,X).
-vp(vp(AV,VB,NP),Verb,X,C)   	--> av(AV,_Av), v(VB,Verb,C), np(NP,X).
+vp(vp(AV,ADJ),X,_,P) 	  		--> av(AV,_Av,P1), adj(ADJ,X,P2), {P is P1*P2*0.09}.
+vp(vp(AV,VB),Verb,C,P)  	  		--> av(AV,_Av,P1), v(VB,Verb,C,P2), {P is P1*P2*0.09}.
+vp(vp(AV,VB,NP),Verb,X,C,P)   	--> av(AV,_Av,P1), v(VB,Verb,C,P2), np(NP,X,P3), {P is P1*P2*P3*0.09}.
+vp(vp(AV,VB,ADV),Verb,Adv,C,P)  	--> av(AV,_Av,P1), v(VB,Verb,C,P2), adv(ADV,Adv,P3), {P is P1*P2*P3*0.09}.
+vp(vp(AV,VB,PREP),Verb,Prep,C,P)  --> av(AV,_Av,P1), v(VB,Verb,C,P2), prep(PREP,Prep,P3), {P is P1*P2*P3*0.09}.
+vp(vp(AV,VB,PREP,N),Verb,X,C,P)	--> av(AV,_Av,P1), v(VB,Verb,C,P2), prep(PREP,_,P3), n(N,X,P4), {P is P1*P2*P3*P4*0.05}.
 
 
-pp(pp(PREP,NP),Sem) 	--> prep(PREP,Prep), np(NP,X), {Sem=..[Prep,X]}.
-pp(pp(DET,NBAR),X) 		--> det(DET,_Det), 	nbar(NBAR,X).
+pp(pp(PREP,NP),Sem,P) 	--> prep(PREP,Prep,P1), np(NP,X,P2), {Sem=..[Prep,X]}, {P is P1*P2*0.5}.
+pp(pp(DET,NBAR),X,P) 		--> det(DET,_Det,P1), 	nbar(NBAR,X,P2), {P is P1*P2*0.5}.
 
-nbar(nbar(N),Nx) 		--> n(N,Nx).
-nbar(nbar(ADJ,NBAR),Sem) --> adj(ADJ,X1), nbar(NBAR,X2), {Sem=..[X1,X2]}.
+nbar(nbar(N),Nx,P) 		--> n(N,Nx,P1), {P is P1*0.5}.
+nbar(nbar(ADJ,NBAR),Sem,P) --> adj(ADJ,X1,P1), nbar(NBAR,X2,P2), {Sem=..[X1,X2]}, {P is P1*P2*0.5}.
 
-det(det(X),X)	 -->[X], {determiner(X)}.
-conj(conj(X),X)	 -->[X], {conjuction(X)}.
-pn(pn(X),X)		 -->[X], {pronoun(X)}.
-n(n(X),X)		 -->[X], {noun(X)}.
-adj(adj(X),X)	 -->[X], {adjective(X)}.
-v(v(X),Vx,C) 	 -->[X], {verb(Vx,C,[X],[])}.
-av(av(X),X)	 	 -->[X], {averb(X)}.
-qw(qw(X),X)		 -->[X], {qword(X)}.
-adv(adv(X),X)	 -->[X], {adverb(X)}.
-prep(prep(X),X)	 -->[X], {preposition(X)}.
+det(det(X),X,1.0)	 -->[X], {determiner(X)}.
+conj(conj(X),X,1.0)	 -->[X], {conjuction(X)}.
+pn(pn(X),X,1.0)		 -->[X], {pronoun(X)}.
+n(n(X),X,1.0)		 -->[X], {noun(X)}.
+adj(adj(X),X,1.0)	 -->[X], {adjective(X)}.
+v(v(X),Vx,C,1.0) 	 -->[X], {verb(Vx,C,[X],[])}.
+av(av(X),X,1.0)	 	 -->[X], {averb(X)}.
+qw(qw(X),X,1.0)		 -->[X], {qword(X)}.
+adv(adv(X),X,1.0)	 -->[X], {adverb(X)}.
+prep(prep(X),X,1.0)	 -->[X], {preposition(X)}.
 
 
 /* Questions */
-q(q(QW,AV,NP1,VB,NP2,PREP), X) --> qw(QW,_Qw), av(AV,_Av), np(NP1,N1), v(VB,Verb,_), np(NP2,N2), prep(PREP,_Prep), {Sem=..[Verb,N1,N2,X],Sem}.
-q(q(QW,AV,NP1,VB,NP2,PREP), X) --> qw(QW,_Qw), av(AV,_Av), np(NP1,N1), v(VB,Verb,_), prep(PREP,_Prep), np(NP2,N2), {Sem=..[Verb,N1,X,N2],Sem}.
-q(q(QW,VB,NP1,PREP,NP2), X) --> qw(QW,_Qw), v(VB,Verb,_), np(NP1,N1), prep(PREP,_Prep), np(NP2,N2), {Sem=..[Verb,X,N1,N2],Sem}.
+q(q(QW,AV,NP1,VB,NP2,PREP), X,P) --> qw(QW,_Qw,P1), av(AV,_Av,P2), np(NP1,N1,P3), v(VB,Verb,_,P4), np(NP2,N2,P5), prep(PREP,_Prep,P6), {Sem=..[Verb,N1,N2,X],Sem}, {P is P1*P2*P3*P4*P5*P6*0.0625}.
+q(q(QW,AV,NP1,VB,NP2,PREP), X,P) --> qw(QW,_Qw,P1), av(AV,_Av,P2), np(NP1,N1,P3), v(VB,Verb,_,P4), prep(PREP,_Prep,P5), np(NP2,N2,P6), {Sem=..[Verb,N1,X,N2],Sem}, {P is P1*P2*P3*P4*P5*P6*0.0625}.
+q(q(QW,VB,NP1,PREP,NP2), X,P) --> qw(QW,_Qw,P1), v(VB,Verb,_,P2), np(NP1,N1,P3), prep(PREP,_Prep,P4), np(NP2,N2,P5), {Sem=..[Verb,X,N1,N2],Sem}, {P is P1*P2*P3*P4*P5*0.0625}.
 
 
-q(q(QW,VB,ADV),	 X) 	--> qw(QW,_Qw), v(VB,Verb,_), adv(ADV,Adv),					{Sem=..[Verb,X,Adv],Sem}.
-q(q(QW,VB,NP),	 X) 	--> qw(QW,_Qw), v(VB,Verb,_), np(NP,N),						{Sem=..[Verb,X,N],Sem}.
-q(q(QW,VB,NP),	 X) 	--> qw(QW,_Qw), v(VB,Verb,_), np(NP,N),						{Sem=..[Verb,X,N],Sem}.
-q(q(QW,VB),		 X) 	--> qw(QW,_Qw), v(VB,Verb,_), 								{Sem=..[Verb,X],Sem}.
+q(q(QW,VB,ADV),	 X, P) 	--> qw(QW,_Qw,P1), v(VB,Verb,_,P2), adv(ADV,Adv,P3), {Sem=..[Verb,X,Adv],Sem}, {P is P1*P2*P3*0.0625}.
+q(q(QW,ADV,VB),	 X, P) 	--> qw(QW,_Qw,P1), adv(ADV,Adv,P2), v(VB,Verb,_,P3), {Sem=..[Verb,X,Adv],Sem}, {P is P1*P2*P3*0.0625}.
+q(q(QW,VB,NP),	 X, P) 	--> qw(QW,_Qw,P1), v(VB,Verb,_,P2), np(NP,N,P3), {Sem=..[Verb,X,N],Sem}, {P is P1*P2*P3*0.0625}.
+q(q(QW,VB,NP),	 X, P) 	--> qw(QW,_Qw,P1), v(VB,Verb,_,P2), np(NP,N,P3),	{Sem=..[Verb,X,N],Sem}, {P is P1*P2*P3*0.0625}.
+q(q(QW,VB),		 X, P) 	--> qw(QW,_Qw,P1), v(VB,Verb,_,P2), {Sem=..[Verb,X],Sem}, {P is P1*P2*0.0625}.
 
-q(q(QW,AV,VB),	   X)	--> qw(QW,_Qw), av(AV,_Av), 	v(VB,Verb,_), 				{Sem=..[Verb,X],Sem}.
-q(q(QW,AV,VB,ADV),  X)	--> qw(QW,_Qw), av(AV,_Av), 	v(VB,Verb,_), adv(ADV,Adv),	{Sem=..[Verb,X,Adv],Sem}.
-q(q(QW,AV,NP,VB),   X) 	--> qw(QW,_Qw), av(AV,_Av), 	np(NP,N), 	v(VB,Verb,_),		{Sem=..[Verb,N,X],Sem}.
-q(q(QW,AV,ADJ),    X)  	--> qw(QW,_Qw), av(AV,_Av), 	adj(ADJ,Adj),				{Sem=..[Adj,X],Sem}.
-q(q(QW,VB,CONJ,ST), X) 	--> qw(QW,_Qw), v(VB,Verb,_), conj(CONJ,_Conj), s(ST,S),		{Sem=..[Verb,X,S],Sem}.
+q(q(QW,AV,VB),	   X, P)	--> qw(QW,_Qw,P1), av(AV,_Av,P2), 	v(VB,Verb,_,P3), 				{Sem=..[Verb,X],Sem}, {P is P1*P2*P3*0.0625}.
+q(q(QW,AV,VB,ADV),  X, P)	--> qw(QW,_Qw,P1), av(AV,_Av,P2), 	v(VB,Verb,_,P3), adv(ADV,Adv,P4),	{Sem=..[Verb,X,Adv],Sem}, {P is P1*P2*P3*P4*0.0625}.
+q(q(QW,AV,NP,VB),   X, P) 	--> qw(QW,_Qw,P1), av(AV,_Av,P2), 	np(NP,N,P3), 	v(VB,Verb,_,P4),		{Sem=..[Verb,N,X],Sem}, {P is P1*P2*P3*P4*0.0625}.
+q(q(QW,AV,ADJ),    X, P)  	--> qw(QW,_Qw,P1), av(AV,_Av,P2), 	adj(ADJ,Adj,P3),				{Sem=..[Adj,X],Sem}, {P is P1*P2*P3*0.0625}.
+q(q(QW,VB,CONJ,ST), X, P) 	--> qw(QW,_Qw,P1), v(VB,Verb,_,P2), conj(CONJ,_Conj,P3), s(ST,S,P4),		{Sem=..[Verb,X,S],Sem}, {P is P1*P2*P3*P4*0.0625}.
 
-q(q(QW,AV,NP,VB), X) 	--> qw(QW,how), av(AV,_Av),	np(NP,N), 	v(VB,Verb,_),		{Sem=..[Verb,N,X],Sem}.
+q(q(QW,AV,NP,VB), X, P) 	--> qw(QW,how,P1), av(AV,_Av,P2),	np(NP,N,P3), 	v(VB,Verb,_,P4),		{Sem=..[Verb,N,X],Sem}, {P is P1*P2*P3*P4*0.0625}.
 
-q(q(QW,AV,NP,VB,PREP), X) --> qw(QW,what), av(AV,_Av), np(NP,N), v(VB,Verb,_), prep(PREP,_Prep), {Sem=..[Verb,N,X],Sem}.
-q(q(QW,AV,VB,PREP,NP), X) --> qw(QW,who), av(AV,_Av), v(VB,Verb,_), prep(PREP,_Prep), np(NP,N),  {Sem=..[Verb,X,N],Sem}.
+q(q(QW,AV,NP,VB,PREP), X,P) --> qw(QW,what,P1), av(AV,_Av,P2), np(NP,N,P3), v(VB,Verb,_,P4), prep(PREP,_Prep,P5), {Sem=..[Verb,N,X],Sem}, {P is P1*P2*P3*P4*P5*0.0625}.
+q(q(QW,AV,VB,PREP,NP), X, P) --> qw(QW,who,P1), av(AV,_Av,P2), v(VB,Verb,_,P3), prep(PREP,_Prep,P4), np(NP,N,P5),  {Sem=..[Verb,X,N],Sem}, {P is P1*P2*P3*P4*P5*0.0625}.
 
 
 
@@ -123,20 +122,34 @@ verb(fly,1)-->[fly]. verb(fly,2)-->[flew]. verb(fly,3)-->[flown]. verb(fly,4)-->
 verb(speak,1)-->[speak]. verb(speak,2)-->[spoke]. verb(speak,3)-->[spoken]. verb(speak,4)-->[speaking]. verb(speak,5)-->[speaks].
 
 
+/* From parser.pl */
+pcfg_all(L,T,R,P) :- s(T,R,P,L,[]).
+
+pcfg_max(L,T,R,P) :- 
+    findall(Prob, s(T,R,Prob,L,[]), Probs), 
+    max_list(Probs, P),
+    s(T,R,P,L,[]).
+
+max_list([X], X).
+max_list([H|T], Max) :-
+    max_list(T, MaxTail),
+    (H > MaxTail -> Max = H ; Max = MaxTail).
 
 
 /* Add, remove, and query facts from the knowledge base */
-add_kb(L) :- s(T,R,L,[]), 
+add_kb(L) :- pcfg_max(L,T,R,P), 
     assert(R), 
     write('The fact '),write(R),write(' was added to the KB.'),nl,
-    write('Parse tree: '),write(T),nl.
+    write('Parse tree: '),write(T),nl,
+	write('Prob: '),write(P),nl.
 
-remove_kb(L) :- s(T,R,L,[]), 
+remove_kb(L) :- pcfg_max(L,T,R,P), 
     retract(R), 
     write('The fact '),write(R),write(' was removed from the KB.'),nl,
-    write('Parse tree: '),write(T),nl.
+    write('Parse tree: '),write(T),nl,
+	write('Prob: '),write(P),nl.
 
-query_kb(L) :- q(_,R,L,[]),
+query_kb(L) :- q(_,R,P,L,[]),
     write('Answer: '),write(R),nl.
 
 
