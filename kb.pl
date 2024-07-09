@@ -1,3 +1,5 @@
+/* ----- STATEMENTS ----- */
+
 s(s(s(NP,VP),CONJ,ST),Sem,P) --> np(NP,X,P1), vp(VP,Y,_,P2), conj(CONJ,_Conj,P3), s(ST,S,P4),	{Sem=..[Y,X,S]}, {P is P1*P2*P3*P4*0.25}.
 s(s(NP,VP),Sem,P) --> np(NP,X,P1), vp(VP,Y,Z,W,_,P2), 	{Sem=..[Y,X,Z,W]}, {P is P1*P2*0.25}.
 s(s(NP,VP),Sem,P) --> np(NP,X,P1), vp(VP,Y,Z,_,P2), 		{Sem=..[Y,X,Z]}, {P is P1*P2*0.25}.
@@ -43,28 +45,37 @@ adv(adv(X),X,1.0)	 -->[X], {adverb(X)}.
 prep(prep(X),X,1.0)	 -->[X], {preposition(X)}.
 
 
-/* Questions */
-q(q(QW,AV,NP1,VB,NP2,PREP), X,P) --> qw(QW,_Qw,P1), av(AV,_Av,P2), np(NP1,N1,P3), v(VB,Verb,_,P4), np(NP2,N2,P5), prep(PREP,_Prep,P6), {Sem=..[Verb,N1,N2,X],Sem}, {P is P1*P2*P3*P4*P5*P6*0.0625}.
-q(q(QW,AV,NP1,VB,NP2,PREP), X,P) --> qw(QW,_Qw,P1), av(AV,_Av,P2), np(NP1,N1,P3), v(VB,Verb,_,P4), prep(PREP,_Prep,P5), np(NP2,N2,P6), {Sem=..[Verb,N1,X,N2],Sem}, {P is P1*P2*P3*P4*P5*P6*0.0625}.
-q(q(QW,VB,NP1,PREP,NP2), X,P) --> qw(QW,_Qw,P1), v(VB,Verb,_,P2), np(NP1,N1,P3), prep(PREP,_Prep,P4), np(NP2,N2,P5), {Sem=..[Verb,X,N1,N2],Sem}, {P is P1*P2*P3*P4*P5*0.0625}.
+/* ----- QUESTIONS ------ */
+
+/* 1: Yes/No questions */
+q(q(AV,NP,ADJ),	 Sem,1,P) --> av(AV,_Av,P1), np(NP,N,P2), adj(ADJ,Adj,P3), {Sem=..[Adj,N]}, {P is P1*P2*P3*0.05}.
+
+q(q(AV,NP,V),	 Sem,1,P) --> av(AV,_Av,P1), np(NP,N,P2), v(V,Verb,_,P3), 			   	{Sem=..[Verb,N]}, {P is P1*P2*P3*0.05}.
+q(q(AV,NP,V,ADV),Sem,1,P) --> av(AV,_Av,P1), np(NP,N,P2), v(V,Verb,_,P3), adv(ADV,Adv,P4), 	{Sem=..[Verb,N,Adv]}, {P is P1*P2*P3*P4*0.05}.
+q(q(AV,NP,V,NP2),Sem,1,P) --> av(AV,_Av,P1), np(NP,N,P2), v(V,Verb,_,P3), np(NP2,N2,P4), 	{Sem=..[Verb,N,N2]}, {P is P1*P2*P3*P4*0.05}.
+
+/* 2: Wh- questions (i.e. what, when, where, who, whom, which, whose, why, how) */
+q(q(QW,AV,NP1,VB,NP2,PREP), X,2,P) --> qw(QW,_Qw,P1), av(AV,_Av,P2), np(NP1,N1,P3), v(VB,Verb,_,P4), np(NP2,N2,P5), prep(PREP,_Prep,P6), {Sem=..[Verb,N1,N2,X],Sem}, {P is P1*P2*P3*P4*P5*P6*0.05}.
+q(q(QW,AV,NP1,VB,NP2,PREP), X,2,P) --> qw(QW,_Qw,P1), av(AV,_Av,P2), np(NP1,N1,P3), v(VB,Verb,_,P4), prep(PREP,_Prep,P5), np(NP2,N2,P6), {Sem=..[Verb,N1,X,N2],Sem}, {P is P1*P2*P3*P4*P5*P6*0.05}.
+q(q(QW,VB,NP1,PREP,NP2), X,2,P) --> qw(QW,_Qw,P1), v(VB,Verb,_,P2), np(NP1,N1,P3), prep(PREP,_Prep,P4), np(NP2,N2,P5), {Sem=..[Verb,X,N1,N2],Sem}, {P is P1*P2*P3*P4*P5*0.05}.
 
 
-q(q(QW,VB,ADV),	 X, P) 	--> qw(QW,_Qw,P1), v(VB,Verb,_,P2), adv(ADV,Adv,P3), {Sem=..[Verb,X,Adv],Sem}, {P is P1*P2*P3*0.0625}.
-q(q(QW,ADV,VB),	 X, P) 	--> qw(QW,_Qw,P1), adv(ADV,Adv,P2), v(VB,Verb,_,P3), {Sem=..[Verb,X,Adv],Sem}, {P is P1*P2*P3*0.0625}.
-q(q(QW,VB,NP),	 X, P) 	--> qw(QW,_Qw,P1), v(VB,Verb,_,P2), np(NP,N,P3), {Sem=..[Verb,X,N],Sem}, {P is P1*P2*P3*0.0625}.
-q(q(QW,VB,NP),	 X, P) 	--> qw(QW,_Qw,P1), v(VB,Verb,_,P2), np(NP,N,P3),	{Sem=..[Verb,X,N],Sem}, {P is P1*P2*P3*0.0625}.
-q(q(QW,VB),		 X, P) 	--> qw(QW,_Qw,P1), v(VB,Verb,_,P2), {Sem=..[Verb,X],Sem}, {P is P1*P2*0.0625}.
+q(q(QW,VB,ADV),	 X, 2, P) 	--> qw(QW,_Qw,P1), v(VB,Verb,_,P2), adv(ADV,Adv,P3), {Sem=..[Verb,X,Adv],Sem}, {P is P1*P2*P3*0.05}.
+q(q(QW,ADV,VB),	 X, 2, P) 	--> qw(QW,_Qw,P1), adv(ADV,Adv,P2), v(VB,Verb,_,P3), {Sem=..[Verb,X,Adv],Sem}, {P is P1*P2*P3*0.05}.
+q(q(QW,VB,NP),	 X, 2, P) 	--> qw(QW,_Qw,P1), v(VB,Verb,_,P2), np(NP,N,P3), {Sem=..[Verb,X,N],Sem}, {P is P1*P2*P3*0.05}.
+q(q(QW,VB,NP),	 X, 2, P) 	--> qw(QW,_Qw,P1), v(VB,Verb,_,P2), np(NP,N,P3),	{Sem=..[Verb,X,N],Sem}, {P is P1*P2*P3*0.05}.
+q(q(QW,VB),		 X, 2, P) 	--> qw(QW,_Qw,P1), v(VB,Verb,_,P2), {Sem=..[Verb,X],Sem}, {P is P1*P2*0.05}.
 
-q(q(QW,AV,VB),	   X, P)	--> qw(QW,_Qw,P1), av(AV,_Av,P2), 	v(VB,Verb,_,P3), 				{Sem=..[Verb,X],Sem}, {P is P1*P2*P3*0.0625}.
-q(q(QW,AV,VB,ADV),  X, P)	--> qw(QW,_Qw,P1), av(AV,_Av,P2), 	v(VB,Verb,_,P3), adv(ADV,Adv,P4),	{Sem=..[Verb,X,Adv],Sem}, {P is P1*P2*P3*P4*0.0625}.
-q(q(QW,AV,NP,VB),   X, P) 	--> qw(QW,_Qw,P1), av(AV,_Av,P2), 	np(NP,N,P3), 	v(VB,Verb,_,P4),		{Sem=..[Verb,N,X],Sem}, {P is P1*P2*P3*P4*0.0625}.
-q(q(QW,AV,ADJ),    X, P)  	--> qw(QW,_Qw,P1), av(AV,_Av,P2), 	adj(ADJ,Adj,P3),				{Sem=..[Adj,X],Sem}, {P is P1*P2*P3*0.0625}.
-q(q(QW,VB,CONJ,ST), X, P) 	--> qw(QW,_Qw,P1), v(VB,Verb,_,P2), conj(CONJ,_Conj,P3), s(ST,S,P4),		{Sem=..[Verb,X,S],Sem}, {P is P1*P2*P3*P4*0.0625}.
+q(q(QW,AV,VB),	   X, 2, P)	--> qw(QW,_Qw,P1), av(AV,_Av,P2), 	v(VB,Verb,_,P3), 				{Sem=..[Verb,X],Sem}, {P is P1*P2*P3*0.05}.
+q(q(QW,AV,VB,ADV),  X, 2, P)	--> qw(QW,_Qw,P1), av(AV,_Av,P2), 	v(VB,Verb,_,P3), adv(ADV,Adv,P4),	{Sem=..[Verb,X,Adv],Sem}, {P is P1*P2*P3*P4*0.05}.
+q(q(QW,AV,NP,VB),   X, 2, P) 	--> qw(QW,_Qw,P1), av(AV,_Av,P2), 	np(NP,N,P3), 	v(VB,Verb,_,P4),		{Sem=..[Verb,N,X],Sem}, {P is P1*P2*P3*P4*0.05}.
+q(q(QW,AV,ADJ),    X, 2, P)  	--> qw(QW,_Qw,P1), av(AV,_Av,P2), 	adj(ADJ,Adj,P3),				{Sem=..[Adj,X],Sem}, {P is P1*P2*P3*0.05}.
+q(q(QW,VB,CONJ,ST), X, 2, P) 	--> qw(QW,_Qw,P1), v(VB,Verb,_,P2), conj(CONJ,_Conj,P3), s(ST,S,P4),		{Sem=..[Verb,X,S],Sem}, {P is P1*P2*P3*P4*0.05}.
 
-q(q(QW,AV,NP,VB), X, P) 	--> qw(QW,how,P1), av(AV,_Av,P2),	np(NP,N,P3), 	v(VB,Verb,_,P4),		{Sem=..[Verb,N,X],Sem}, {P is P1*P2*P3*P4*0.0625}.
+q(q(QW,AV,NP,VB), X, 2, P) 	--> qw(QW,how,P1), av(AV,_Av,P2),	np(NP,N,P3), 	v(VB,Verb,_,P4),		{Sem=..[Verb,N,X],Sem}, {P is P1*P2*P3*P4*0.05}.
 
-q(q(QW,AV,NP,VB,PREP), X,P) --> qw(QW,what,P1), av(AV,_Av,P2), np(NP,N,P3), v(VB,Verb,_,P4), prep(PREP,_Prep,P5), {Sem=..[Verb,N,X],Sem}, {P is P1*P2*P3*P4*P5*0.0625}.
-q(q(QW,AV,VB,PREP,NP), X, P) --> qw(QW,who,P1), av(AV,_Av,P2), v(VB,Verb,_,P3), prep(PREP,_Prep,P4), np(NP,N,P5),  {Sem=..[Verb,X,N],Sem}, {P is P1*P2*P3*P4*P5*0.0625}.
+q(q(QW,AV,NP,VB,PREP), X,2,P) --> qw(QW,what,P1), av(AV,_Av,P2), np(NP,N,P3), v(VB,Verb,_,P4), prep(PREP,_Prep,P5), {Sem=..[Verb,N,X],Sem}, {P is P1*P2*P3*P4*P5*0.05}.
+q(q(QW,AV,VB,PREP,NP), X, 2, P) --> qw(QW,who,P1), av(AV,_Av,P2), v(VB,Verb,_,P3), prep(PREP,_Prep,P4), np(NP,N,P5),  {Sem=..[Verb,X,N],Sem}, {P is P1*P2*P3*P4*P5*0.05}.
 
 
 
@@ -139,18 +150,25 @@ max_list([H|T], Max) :-
 /* Add, remove, and query facts from the knowledge base */
 add_kb(L) :- pcfg_max(L,T,R,P), 
     assert(R), 
-    write('The fact '),write(R),write(' was added to the KB.'),nl,
+    write('The term '),write(R),write(' was added to the KB.'),nl,
     write('Parse tree: '),write(T),nl,
 	write('Prob: '),write(P),nl.
 
 remove_kb(L) :- pcfg_max(L,T,R,P), 
     retract(R), 
-    write('The fact '),write(R),write(' was removed from the KB.'),nl,
+    write('The term '),write(R),write(' was removed from the KB.'),nl,
     write('Parse tree: '),write(T),nl,
 	write('Prob: '),write(P),nl.
 
-query_kb(L) :- q(_,R,P,L,[]),
-    write('Answer: '),write(R),nl.
+query_kb(L) :- q(T,R,1,P,L,[]), 
+	(R -> write('Answer: YES') ; write('Answer: NO')), nl,
+	write('Parse tree: '),write(T),nl,
+	write('Prob: '),write(P),nl.
+
+query_kb(L) :- q(T,R,2,P,L,[]),
+    write('Answer: '),write(R),nl,
+	write('Parse tree: '),write(T),nl,
+	write('Prob: '),write(P),nl.
 
 
 
