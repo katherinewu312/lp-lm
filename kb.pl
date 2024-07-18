@@ -133,39 +133,37 @@ verb(fly,1)-->[fly]. verb(fly,2)-->[flew]. verb(fly,3)-->[flown]. verb(fly,4)-->
 verb(speak,1)-->[speak]. verb(speak,2)-->[spoke]. verb(speak,3)-->[spoken]. verb(speak,4)-->[speaking]. verb(speak,5)-->[speaks].
 
 
-/* From parser.pl */
-pcfg_all(L,T,R,P) :- s(T,R,P,L,[]).
-
+/* Parsing rules */
 pcfg_max(L,T,R,P) :- 
     findall(Prob, s(T,R,Prob,L,[]), Probs), 
     max_list(Probs, P),
     s(T,R,P,L,[]).
 
-max_list([X], X).
-max_list([H|T], Max) :-
-    max_list(T, MaxTail),
-    (H > MaxTail -> Max = H ; Max = MaxTail).
+/* Tokenizer */
+:- [tokenizer].
 
 
 /* Add, remove, and query facts from the knowledge base */
-add_kb(L) :- pcfg_max(L,T,R,P), 
+add_kb(Sent) :- tokenize(Sent,L), pcfg_max(L,T,R,P), 
     assert(R), 
     write('The term '),write(R),write(' was added to the KB.'),nl,
     write('Parse tree: '),write(T),nl,
 	write('Prob: '),write(P),nl.
 
-remove_kb(L) :- pcfg_max(L,T,R,P), 
+remove_kb(Sent) :- tokenize(Sent,L), pcfg_max(L,T,R,P), 
     retract(R), 
     write('The term '),write(R),write(' was removed from the KB.'),nl,
     write('Parse tree: '),write(T),nl,
 	write('Prob: '),write(P),nl.
 
-query_kb(L) :- q(T,R,1,P,L,[]), 
+/* Yes/no question */
+query_kb(Sent) :- tokenize(Sent,L), q(T,R,1,P,L,[]), 
 	(R -> write('Answer: YES') ; write('Answer: NO')), nl,
 	write('Parse tree: '),write(T),nl,
 	write('Prob: '),write(P),nl.
 
-query_kb(L) :- q(T,R,2,P,L,[]),
+/* Wh- question */
+query_kb(Sent) :- tokenize(Sent,L), q(T,R,2,P,L,[]),
     write('Answer: '),write(R),nl,
 	write('Parse tree: '),write(T),nl,
 	write('Prob: '),write(P),nl.
@@ -179,4 +177,9 @@ member(X, [_|T]) :- member(X, T).
 append([], L, L).
 append([H|T], L2, [H|Result]) :-   
     append(T, L2, Result).
+
+max_list([X], X).
+max_list([H|T], Max) :-
+    max_list(T, MaxTail),
+    (H > MaxTail -> Max = H ; Max = MaxTail).
 
