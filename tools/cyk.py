@@ -1,4 +1,5 @@
 # REFERENCE: https://web.stanford.edu/~jurafsky/slp3/C.pdf
+# USAGE: $ python3 cyk.py <grammar file> <sentence file>
 
 from collections import defaultdict
 import sys

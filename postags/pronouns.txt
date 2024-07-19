@@ -5,6 +5,8 @@ she
 it
 we
 they
+him
+her
 bob
 chris
 sarah

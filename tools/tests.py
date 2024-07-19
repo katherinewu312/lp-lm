@@ -2,7 +2,6 @@
 
 import nltk
 from nltk.grammar import PCFG
-from nltk.parse import ViterbiParser
 from pyswip import Prolog
 from generate_rules import gen_rules
 import time
@@ -53,22 +52,28 @@ def lr_grammar(test_num):
     
     for i in range(len(tokens)):
         result_list = tokens[i]
+        nltk_sum = 0
+        prolog_sum = 0
         
-        # NLTK Test
-        start = time.time()
-        viterbi_parser = nltk.ViterbiParser(grammar)
-        for tree in viterbi_parser.parse(result_list):
-            print("VITERBI: ", tree)
-        end = time.time()
-        nltk_times.append(end-start)
+        for j in range(10):
 
-        # Prolog Test
-        start = time.time()
-        for soln in prolog.query(f"pcfg_max({result_list}, T, P)"):
-            print("PROLOG-DCG: ", soln["T"], soln["P"])
-        end = time.time()
-        prolog_times.append(end-start)
-    
+            # NLTK Test
+            start = time.time()
+            viterbi_parser = nltk.ViterbiParser(grammar)
+            for tree in viterbi_parser.parse(result_list):
+                if j==0: print("VITERBI: ", tree)
+            end = time.time()
+            nltk_sum += end-start
+
+            # Prolog Test
+            start = time.time()
+            for soln in prolog.query(f"pcfg_max({result_list}, T, P)"):
+                if j==0: print("PROLOG-DCG: ", soln["T"], soln["P"])
+            end = time.time()
+            prolog_sum += end-start
+        
+        nltk_times.append(nltk_sum/10)
+        prolog_times.append(prolog_sum/10)
         
 
     # Convert the lists to dictionaries for easier processing in matplotlib
@@ -124,21 +129,28 @@ def rr_grammar(test_num):
     
     for i in range(len(tokens)):
         result_list = tokens[i]
+        nltk_sum = 0
+        prolog_sum = 0
         
-        # NLTK Test
-        start = time.time()
-        viterbi_parser = nltk.ViterbiParser(grammar)
-        for tree in viterbi_parser.parse(result_list):
-            print("VITERBI: ", tree)
-        end = time.time()
-        nltk_times.append(end-start)
+        for j in range(10):
 
-        # Prolog Test
-        start = time.time()
-        for soln in prolog.query(f"pcfg_max({result_list}, T, P)"):
-            print("PROLOG-DCG: ", soln["T"], soln["P"])
-        end = time.time()
-        prolog_times.append(end-start)
+            # NLTK Test
+            start = time.time()
+            viterbi_parser = nltk.ViterbiParser(grammar)
+            for tree in viterbi_parser.parse(result_list):
+                if j==0: print("VITERBI: ", tree)
+            end = time.time()
+            nltk_sum += end-start
+
+            # Prolog Test
+            start = time.time()
+            for soln in prolog.query(f"pcfg_max({result_list}, T, P)"):
+                if j==0: print("PROLOG-DCG: ", soln["T"], soln["P"])
+            end = time.time()
+            prolog_sum += end-start
+        
+        nltk_times.append(nltk_sum/10)
+        prolog_times.append(prolog_sum/10)
 
     # Convert the lists to dictionaries for easier processing in matplotlib
     nltk_times = {index: value for index, value in enumerate(nltk_times)}
@@ -192,21 +204,28 @@ def unambiguous_grammar(test_num):
     
     for i in range(len(tokens)):
         result_list = tokens[i]
+        nltk_sum = 0
+        prolog_sum = 0
         
-        # NLTK Test
-        start = time.time()
-        viterbi_parser = nltk.ViterbiParser(grammar)
-        for tree in viterbi_parser.parse(result_list):
-            print("VITERBI: ", tree)
-        end = time.time()
-        nltk_times.append(end-start)
+        for j in range(10):
 
-        # Prolog Test
-        start = time.time()
-        for soln in prolog.query(f"pcfg_max({result_list}, T, P)"):
-            print("PROLOG-DCG: ", soln["T"], soln["P"])
-        end = time.time()
-        prolog_times.append(end-start)
+            # NLTK Test
+            start = time.time()
+            viterbi_parser = nltk.ViterbiParser(grammar)
+            for tree in viterbi_parser.parse(result_list):
+                if j==0: print("VITERBI: ", tree)
+            end = time.time()
+            nltk_sum += end-start
+
+            # Prolog Test
+            start = time.time()
+            for soln in prolog.query(f"pcfg_max({result_list}, T, P)"):
+                if j==0: print("PROLOG-DCG: ", soln["T"], soln["P"])
+            end = time.time()
+            prolog_sum += end-start
+        
+        nltk_times.append(nltk_sum/10)
+        prolog_times.append(prolog_sum/10)
 
     # Convert the lists to dictionaries for easier processing in matplotlib
     nltk_times = {index: value for index, value in enumerate(nltk_times)}
@@ -248,22 +267,28 @@ def ambiguous_grammar(test_num):
     
     for i in range(len(tokens)):
         result_list = tokens[i]
+        nltk_sum = 0
+        prolog_sum = 0
         
-        # NLTK Test
-        start = time.time()
-        viterbi_parser = nltk.ViterbiParser(grammar)
-        for tree in viterbi_parser.parse(result_list):
-            print("VITERBI: ", tree)
-        end = time.time()
-        nltk_times.append(end-start)
+        for j in range(10):
 
-        # Prolog Test
-        start = time.time()
-        for soln in prolog.query(f"pcfg_max({result_list}, T, P)"):
-            print("PROLOG-DCG: ", soln["T"], soln["P"])
-        end = time.time()
-        prolog_times.append(end-start)
+            # NLTK Test
+            start = time.time()
+            viterbi_parser = nltk.ViterbiParser(grammar)
+            for tree in viterbi_parser.parse(result_list):
+                if j==0: print("VITERBI: ", tree)
+            end = time.time()
+            nltk_sum += end-start
 
+            # Prolog Test
+            start = time.time()
+            for soln in prolog.query(f"pcfg_max({result_list}, T, P)"):
+                if j==0: print("PROLOG-DCG: ", soln["T"], soln["P"])
+            end = time.time()
+            prolog_sum += end-start
+        
+        nltk_times.append(nltk_sum/10)
+        prolog_times.append(prolog_sum/10)
     # Convert the lists to dictionaries for easier processing in matplotlib
     nltk_times = {index: value for index, value in enumerate(nltk_times)}
     prolog_times = {index: value for index, value in enumerate(prolog_times)}

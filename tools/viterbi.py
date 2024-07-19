@@ -1,3 +1,5 @@
+# USAGE: $ python3 viterbi.py <grammar file> <sentence file>
+
 import nltk
 from nltk.grammar import PCFG
 from nltk.parse import ViterbiParser
