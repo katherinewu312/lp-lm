@@ -1,6 +1,6 @@
 s(s(T1,'a'),P) --> s1(T1,P1), ['a'], {P is P1*0.4}.
-s(s('a',T1),P) --> ['a'], s1(T1,P1), {P is P1*0.5}.
-s(s('a'),0.1) --> ['a'].
+s(s('a',T1),P) --> ['a'], s1(T1,P1), {P is P1*0.4}.
+s(s('a'),0.2) --> ['a'].
 s1(s1(T1,T2),P) --> s1(T1,P1), s2(T2,P2), {P is P1*P2*0.5}.
 s1(s1('a'),0.5) --> ['a'].
 s2(s2(T1,T2),P) --> s2(T1,P1), s3(T2,P2), {P is P1*P2*0.5}.
@@ -110,14 +110,14 @@ s54(s54('a'),0.5) --> ['a'].
 s10(s10(T1,'a'),P) --> s10(T1,P1), ['a'], {P is P1*0.4}.
 s10(s10('a',T1),P) --> ['a'], s10(T1,P1), {P is P1*0.5}.
 s10(s10('a'),0.1) --> ['a'].
-:- table s10/4.
-:- table s2/4.
-:- table s4/4.
-:- table s6/4.
-:- table s3/4.
 :- table s8/4.
-:- table s9/4.
+:- table s7/4.
+:- table s6/4.
+:- table s10/4.
+:- table s4/4.
 :- table s5/4.
+:- table s3/4.
+:- table s9/4.
 :- table s11/4.
 :- table s1/4.
-:- table s7/4.
+:- table s2/4.
