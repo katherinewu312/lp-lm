@@ -94,7 +94,7 @@ q(q(QW,AV,NP,VB,PREP), X,2,P) --> qw(QW,what,P1), av(AV,_Av,P2), np(NP,N,P3), v(
 q(q(QW,AV,VB,PREP,NP), X, 2, P) --> qw(QW,who,P1), av(AV,_Av,P2), v(VB,Verb,_,P3), prep(PREP,_Prep,P4), np(NP,N,P5),  {Sem=..[Verb,X,N],Sem}, {P is P1*P2*P3*P4*P5*0.05}.
 
 
-q(q(QW,VB,ADJ),	 X, 2, P) 	--> qw(QW,_Qw,P1), v(VB,Verb,_,P2), adj(ADJ,Adj,P3), {Sem=..[Verb,Temp],Temp=..[Adj,X],Sem}, {P is P1*P2*P3*0.05}.
+%% q(q(QW,VB,ADJ),	 X, 2, P) 	--> qw(QW,_Qw,P1), v(VB,Verb,_,P2), adj(ADJ,Adj,P3), {Sem=..[Verb,Temp],Temp=..[Adj,X],Sem}, {P is P1*P2*P3*0.05}.
 
 /* Read lines from the files in postags directory */
 read_file(FileName, FileContent) :-
