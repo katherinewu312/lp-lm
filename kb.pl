@@ -1,28 +1,12 @@
 /* ----- STATEMENTS ----- */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* subject-verb patterns */
-s(s(NP,VP),Sem,P) --> np(NP,X,P1), vp(VP,Y,_,P2), 		{Sem=..[Y,X]}, {P is P1*P2*0.25}. % subject-verb
-s(s(NP,VP),Sem,P) --> np(NP,X,P1), vp(VP,Y,Z,_,P2), 		{Sem=..[Y,X,Z]}, {P is P1*P2*0.25}. % subject-verb-(noun/adj/adv/prep)
-s(s(NP,VP),Sem,P) --> np(NP,X,P1), vp(VP,Y,Z,W,_,P2), 	{Sem=..[Y,X,Z,W]}, {P is P1*P2*0.25}. % subject-verb-noun-(noun/adj/adv), subject-verb-prep-noun
-s(s(NP,VP),Sem,P) --> np(NP,X,P1), vp(VP,Y,Z,W,V,_,P2), 	{Sem=..[Y,X,Z,W,V]}, {P is P1*P2*0.25}. % subject-verb-noun-noun-(adj/adv), subject-verb-noun-prep-noun
-s(s(NP,VP),Sem,P) --> np(NP,X,P1), vp(VP,Y,Z,W,V,U,_,P2), 	{Sem=..[Y,X,Z,W,V,U]}, {P is P1*P2*0.25}. % subject-verb-noun-noun-prep-noun
+s(s(NP,VP),Sem,P) --> np(NP,X,P1), vp(VP,Y,_,P2), 		{Sem=..[Y,X]}, {P is P1*P2*0.2}. % subject-verb
+s(s(NP,VP),Sem,P) --> np(NP,X,P1), vp(VP,Y,Z,_,P2), 		{Sem=..[Y,X,Z]}, {P is P1*P2*0.2}. % subject-verb-(noun/adj/adv/prep)
+s(s(NP,VP),Sem,P) --> np(NP,X,P1), vp(VP,Y,Z,W,_,P2), 	{Sem=..[Y,X,Z,W]}, {P is P1*P2*0.2}. % subject-verb-noun-(noun/adj/adv/prep)
+s(s(NP,VP),Sem,P) --> np(NP,X,P1), vp(VP,Y,Z,W,V,_,P2), 	{Sem=..[Y,X,Z,W,V]}, {P is P1*P2*0.2}. % subject-verb-noun-noun-(adj/adv/prep)
+s(s(s(NP,VP),CONJ,ST),Sem,P) --> np(NP,X,P1), vp(VP,Y,_,P2), conj(CONJ,_Conj,P3), s(ST,S,P4),	{Sem=..[Y,X,S]}, {P is P1*P2*P3*P4*0.2}.
 
-s(s(s(NP,VP),CONJ,ST),Sem,P) --> np(NP,X,P1), vp(VP,Y,_,P2), conj(CONJ,_Conj,P3), s(ST,S,P4),	{Sem=..[Y,X,S]}, {P is P1*P2*P3*P4*0.25}.
 
 /* nouns */
 np(np(NBAR),X,P) 		--> nbar(NBAR,X,P1), {P is P1*0.3}.
@@ -32,32 +16,30 @@ nbar(nbar(PN),Nx,P) 		--> pn(PN,Nx,P1), {P is P1*0.1}.
 nbar(nbar(ADJ,NBAR),Sem,P) --> adj(ADJ,X1,P1), nbar(NBAR,X2,P2), {Sem=..[X1,X2]}, {P is P1*P2*0.1}.
 nbar(nbar(ADV,NBAR),Sem,P) --> adv(ADV,X1,P1), nbar(NBAR,X2,P2), {Sem=..[X1,X2]}, {P is P1*P2*0.1}.
 
-%% np(np(N),X,P) 			--> n(N,X,P1), {P is P1*0.2}.
-%% np(np(PN),X,P) 			--> pn(PN,X,P1), {P is P1*0.2}.
-%% np(np(PP,DET,NBAR),X2,P) 	 --> pp(PP,_X1,P1),  	 det(DET,_Det,P2), nbar(NBAR,X2,P3), {P is P1*P2*P3*0.15}.
-%% np(np(PREP,DET,NBAR),X2,P) --> prep(PREP,_X1,P1), det(DET,_Det,P2), nbar(NBAR,X2,P3), {P is P1*P2*P3*0.15}.
-%% np(np(DET,NBAR,PP),X1,P) 	 --> det(DET,_Det,P1),  nbar(NBAR,X1,P2), pp(PP,_X2,P3), {P is P1*P2*P3*0.15}.
 
-
-/* verbs */
+/* verbs - simple */
 vp(vp(VB),Verb,C,P)  		  	--> v(VB,Verb,C,P1), {P is P1*0.09}.
 vp(vp(VB,NP),Verb,Np,C,P) 	  	--> v(VB,Verb,C,P1), np(NP,Np,P2), {P is P1*P2*0.09}.
 vp(vp(VB,ADJ),Verb,Adj,C,P) 	--> v(VB,Verb,C,P1), adj(ADJ,Adj,P2), {P is P1*P2*0.09}.
 vp(vp(VB,ADV),Verb,Adv,C,P) 	--> v(VB,Verb,C,P1), adv(ADV,Adv,P2), {P is P1*P2*0.09}.
+vp(vp(VB,PREP),Verb,Prep,C,P) --> v(VB,Verb,C,P1), pp(PREP,Prep,P2), {P is P1*P2*0.09}.
+
 vp(vp(VB,NP1,NP2),Verb,Np1,Np2,C,P) --> v(VB,Verb,C,P1), np(NP1,Np1,P2), np(NP2,Np2,P3), {P is P1*P2*P3*0.09}.
 vp(vp(VB,NP,ADJ),Verb,Np,Adj,C,P) --> v(VB,Verb,C,P1), np(NP,Np,P2), adj(ADJ,Adj,P3), {P is P1*P2*P3*0.09}.
 vp(vp(VB,NP,ADV),Verb,Np,Adv,C,P) --> v(VB,Verb,C,P1), np(NP,Np,P2), adv(ADV,Adv,P3), {P is P1*P2*P3*0.09}.
+vp(vp(VB,NP1,PREP),Verb,Np1,Prep,C,P) --> v(VB,Verb,C,P1), np(NP1,Np1,P2), pp(PREP,Prep,P3), {P is P1*P2*P3*0.09}.
+
 vp(vp(VB,NP1,NP2,ADJ),Verb,Np1,Np2,Adj,C,P) --> v(VB,Verb,C,P1), np(NP1,Np1,P2), np(NP2,Np2,P3), adj(ADJ,Adj,P4), {P is P1*P2*P3*P4*0.09}.
 vp(vp(VB,NP1,NP2,ADV),Verb,Np1,Np2,Adv,C,P) --> v(VB,Verb,C,P1), np(NP1,Np1,P2), np(NP2,Np2,P3), adv(ADV,Adv,P4), {P is P1*P2*P3*P4*0.09}.
-
-vp(vp(VB,PREP),Verb,Prep,C,P) --> v(VB,Verb,C,P1), prep(PREP,Prep,P2), {P is P1*P2*0.09}.
-vp(vp(VB,PREP,NP),Verb,Prep,Np,C,P) --> v(VB,Verb,C,P1), prep(PREP,Prep,P2), np(NP,Np,P3), {P is P1*P2*P3*0.09}.
-vp(vp(VB,NP1,PREP,NP2),Verb,Np1,Prep,Np2,C,P) --> v(VB,Verb,C,P1), np(NP1,Np1,P2), prep(PREP,Prep,P3), np(NP2,Np2,P4), {P is P1*P2*P3*P4*0.09}.
-vp(vp(VB,NP1,NP2,PREP,NP3),Verb,Np1,Np2,Prep,Np3,C,P) --> v(VB,Verb,C,P1), np(NP1,Np1,P2), np(NP2,Np2,P3), prep(PREP,Prep,P4), np(NP3,Np3,P5), {P is P1*P2*P3*P4*P5*0.09}.
+vp(vp(VB,NP1,NP2,PREP),Verb,Np1,Np2,Prep,C,P) --> v(VB,Verb,C,P1), np(NP1,Np1,P2), np(NP2,Np2,P3), pp(PREP,Prep,P4), {P is P1*P2*P3*P4*0.09}.
 
 
-%% vp(vp(VB,NP1,PREP,NP2),Verb,X1,X2,C,P) --> v(VB,Verb,C,P1), np(NP1,X1,P2), prep(PREP,_Prep,P3), np(NP2,X2,P4), {P is P1*P2*P3*P4*0.05}.
+/* prepositions */
+pp(pp(PREP),Prep,P) 		--> prep(PREP,Prep,P1), {P is P1*0.5}.
+pp(pp(PREP,NP),Sem,P)   --> prep(PREP,Prep,P1), np(NP,Np,P2), {Sem=..[Prep,Np]}, {P is P1*P2*0.5}.
 
+
+/* verbs - with auxillary */
 %% vp(vp(AV,ADJ),X,_,P) 	  		--> av(AV,_Av,P1), adj(ADJ,X,P2), {P is P1*P2*0.09}.
 %% vp(vp(AV,VB),Verb,C,P)  	  		--> av(AV,_Av,P1), v(VB,Verb,C,P2), {P is P1*P2*0.09}.
 %% vp(vp(AV,VB,NP),Verb,X,C,P)   	--> av(AV,_Av,P1), v(VB,Verb,C,P2), np(NP,X,P3), {P is P1*P2*P3*0.09}.
@@ -65,9 +47,6 @@ vp(vp(VB,NP1,NP2,PREP,NP3),Verb,Np1,Np2,Prep,Np3,C,P) --> v(VB,Verb,C,P1), np(NP
 %% vp(vp(AV,VB,PREP),Verb,Prep,C,P)  --> av(AV,_Av,P1), v(VB,Verb,C,P2), prep(PREP,Prep,P3), {P is P1*P2*P3*0.09}.
 %% vp(vp(AV,VB,PREP,N),Verb,X,C,P)	--> av(AV,_Av,P1), v(VB,Verb,C,P2), prep(PREP,_,P3), n(N,X,P4), {P is P1*P2*P3*P4*0.05}.
 
-
-%% pp(pp(PREP,NP),Sem,P) 	--> prep(PREP,Prep,P1), np(NP,X,P2), {Sem=..[Prep,X]}, {P is P1*P2*0.5}.
-%% pp(pp(DET,NBAR),X,P) 		--> det(DET,_Det,P1), 	nbar(NBAR,X,P2), {P is P1*P2*0.5}.
 
 
 det(det(X),X,1.0)	 -->[X], {determiner(X)}.
@@ -115,6 +94,7 @@ q(q(QW,AV,NP,VB,PREP), X,2,P) --> qw(QW,what,P1), av(AV,_Av,P2), np(NP,N,P3), v(
 q(q(QW,AV,VB,PREP,NP), X, 2, P) --> qw(QW,who,P1), av(AV,_Av,P2), v(VB,Verb,_,P3), prep(PREP,_Prep,P4), np(NP,N,P5),  {Sem=..[Verb,X,N],Sem}, {P is P1*P2*P3*P4*P5*0.05}.
 
 
+q(q(QW,VB,ADJ),	 X, 2, P) 	--> qw(QW,_Qw,P1), v(VB,Verb,_,P2), adj(ADJ,Adj,P3), {Sem=..[Verb,Temp],Temp=..[Adj,X],Sem}, {P is P1*P2*P3*0.05}.
 
 /* Read lines from the files in postags directory */
 read_file(FileName, FileContent) :-
@@ -151,7 +131,7 @@ conjuction(X) :- read_file('postags/conjunctions.txt', List), member(X, List).
 adverb(X) :- read_file('postags/adverbs.txt', List), member(X, List).
 preposition(X) :- read_file('postags/prepositions.txt', List), member(X, List).
 averb(X) :- read_file('postags/averbs.txt', List), member(X, List).
-qword(X):- member(X, [who,what,how]).
+qword(X):- member(X, [what, which, who, where, why, when, how, whose]).
 
 /* 
 Define verbs:
