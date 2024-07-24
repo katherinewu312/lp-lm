@@ -100,7 +100,7 @@ ex. Who elected him president &rarr; elect(X,him,president), Who painted his car
 
 ### 2. Query about noun: qw-aux verb-subject-verb-{noun/adj/adv/prep} &rarr; verb(subject,X,{noun,adj,adv,prep})
 
-ex. Who did they elect president &rarr; elect(they,X,president), What did Ronny paint black &rarr; paint(Ronny,X,black), What did she paint aggresively &rarr; paint(she,X,aggressively), What did his parent buy for him &rarr; buy(parents,X,for(him))
+ex. Who did they elect president &rarr; elect(they,X,president), What did Ronny paint black &rarr; paint(Ronny,X,black), What did she paint aggresively &rarr; paint(she,X,aggressively), What did his parents buy for him &rarr; buy(parents,X,for(him))
 
 ### 3. Query about {noun,adj,adv,prep}: qw-aux verb-subject-verb-noun &rarr; verb(subject,noun,X)
 
@@ -122,7 +122,17 @@ ex. Who did she give a present yesterday &rarr; give(she,X,present,yesterday), W
 ex. When did she give me the present &rarr; give(she,me,present,X), Where did he show the class his project &rarr; show(he,class,project,X)
 
 
+## Querying nested words
+### 1. Query about noun inside adjectives/adverbs: qw-be-{adj/adv}-and ..., ... and-be-{adj/adv}, ... that-be-{adj/adv}
 
+ex. What is very gray and sleeps, What sleeps and is very gray, What sleeps that is very gray &rarr; sleep(very(gray(X)))
+
+### 2. Query about noun inside preposition: qw-aux verb-subject-verb-...-prep
+
+ex. What does the cat sit on &rarr; sit(cat,on(X)), Who did his parents buy a computer for &rarr; buy(parents,computer,for(X)), Where did he show the class his project by &rarr; show(he,class,project,by(X))
+
+## Querying more than one argument
+Coming soon.
 
 
 # Usage
